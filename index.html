@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-
+scalable=no, viewport-fit=cover"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="theme-color" content="#fff" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap:"
+    />
+    <title>Tugas Akhir</title>
+    <link rel="stylesheet" href="core/framework7-bundle.min.css" />
+    <link rel="stylesheet" href="css/app.css" />
+  </head>
+
+  <body>
+    <div id="app">
+      <div
+        class="view view-main view-init safe-areas"
+        data-master-detail-breakpoint="768"
+        data-url="/"
+      ></div>
+    </div>
+    <script src="core/framework7-bundle.min.js"></script>
+    <script src="js/routes.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/jquery-3.6.0.min.js"></script>
+
+    <script>
+      var url = "http://localhost/Sistem-IMT/";
+      cek();
+      function cek() {
+        if (
+          localStorage.getItem("id") != null &&
+          localStorage.getItem("email") != null
+        ) {
+          app.views.main.router.navigate("/home/");
+        } else {
+          app.views.main.router.navigate("/login/");
+        }
+      }
+      function login() {
+        let email = $("#email").val();
+        let password = $("#password").val();
+        if (email == "" || password == "") {
+          app.dialog.alert("Harap isi data diri anda", "Warning!");
+          return;
+        }
+        $.ajax({
+          url: url + "api/login",
+          method: "POST",
+          data: {
+            email: email,
+            password: password,
+          },
+          cache: "false",
+          success: function (repsonse) {
+            if (repsonse.status == "success") {
+              localStorage.setItem("id", repsonse.data.id_user);
+              localStorage.setItem("nama", repsonse.data.nama);
+              localStorage.setItem("jenis", repsonse.data.jenis);
+              localStorage.setItem("email", repsonse.data.email);
+              localStorage.setItem("alamat", repsonse.data.alamat);
+              localStorage.setItem("instansi", repsonse.data.instansi);
+              localStorage.setItem("photo", repsonse.data.photo);
+              location.reload(true);
+              app.views.main.router.navigate("/home/");
+            } else {
+              app.dialog.alert(data.message, "Gagal");
+            }
+          },
+        });
+      }
+
+      function logout() {
+        app.dialog.alert("Apakah ingin keluar?", "Peringatan", function () {
+          localStorage.removeItem("id");
+          localStorage.removeItem("nama");
+          localStorage.removeItem("jenis");
+          localStorage.removeItem("email");
+          localStorage.removeItem("alamat");
+          localStorage.removeItem("instansi");
+          localStorage.removeItem("photo");
+          location.reload(true);
+        });
+      }
+    </script>
+  </body>
+</html>

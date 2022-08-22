@@ -1,0 +1,78 @@
+<template>
+  <div class="page page-home">
+    <div class="navbar no-shadow" style="color: white">
+      <div
+        class="navbar-bg bg-color-deeppurple"
+        style="
+          height: 55px;
+          border-top-left-radius: 15px;
+          border-top-right-radius: 15px;
+        "
+      ></div>
+      <div class="navbar-inner">
+        <div class="left">
+          <a href="#" class="link back" style="color: white">
+            <i class="icon icon-back"></i>
+          </a>
+        </div>
+        <div class="title" style="margin-left: 5px">Profile</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block">
+        <div style="display: block; width: 15%; margin-left: auto; margin-right: auto">
+            <span class="circle-image">
+                <img id="img" width="50" height="50" alt="User"/>
+            </span>
+        </div>
+        <div class="card demo-facebook-card mt-5 btn-border-10 p-1 shadow">
+          <div class="card-header">
+              <div class="data-table">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th class="bold">Nama :</th>
+                        <th><span class="bold" id="nama"></span></th>
+                      </tr>
+                      <tr>
+                        <th class="bold">Jenis :</th>
+                        <th><span class="bold" id="jenis_profil"></span></th>
+                      </tr>
+                      <tr>
+                        <th class="bold">Email :</th>
+                        <th><span class="bold" id="email_profil"></span></th>
+                      </tr>
+                      <tr>
+                        <th class="bold">Alamat :</th>
+                        <th><span class="bold" id="alamat"></span></th>
+                      </tr>
+                      <tr>
+                        <th class="bold">Instansi :</th>
+                        <th><span class="bold" id="instansi"></span></th>
+                      </tr>
+                    </thead>
+                  </table>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  export default (props, ctx) => {
+    var $on = ctx.$on;
+    $on("pageInit", () => {
+        $.getJSON(url + 'api/profil',{id: localStorage.getItem("id")} , function (data) {
+            $("#img").attr("src", url + "assets/profile_picture/" + data.data.photo);
+            $("#jenis").html(data.data.jenis);
+            $("#nama").html(data.data.nama);
+            $("#jenis_profil").html(data.data.jenis);
+            $("#email_profil").html(data.data.email);
+            $("#alamat").html(data.data.alamat);
+            $("#instansi").html(data.data.instansi);
+        });
+    });
+    return $render;
+  };
+</script>

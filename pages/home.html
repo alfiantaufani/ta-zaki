@@ -1,0 +1,53 @@
+<template>
+    <div class="page page-home">
+        <div class="navbar no-shadow" style="color: white;">
+            <div class="navbar-bg bg-color-deeppurple"
+                style="height: 55px; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+            </div>
+            <div class="navbar-inner">
+                <div class="title">Dashboard</div>
+                <div class="right">
+                    <a href="#" class="link icon-only panel-open" data-panel="right" style="color: white;">
+                        <i class="icon material-icons md-only">menu</i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div style="background: url('img/bgnavy.png'); margin-top: 40px; height: 1000px; border-radius: 15px;"></div>
+        <div class="page-content" style="margin-top: -1030px;">
+            <div class="panel panel-right panel-cover panel-resizable panel-init">
+                <div class="block-title">Menu</div>
+                <div class="list links-list">
+                    <ul>
+                        <li>
+                            <a href="/profil/" class="panel-close">Profile</a>
+                        </li>
+                        <li>
+                            <a href="/dtpasien/" class="panel-close">Data Pasien</a>
+                        </li>
+                        <li>
+                            <a href="/dtukur/" class="panel-close">Hasil Pengukuran</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" class="panel-close" @click="${() => logout()}">Keluar</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h3 style="color: #fff; margin: 20px">
+                Selamat Datang, <span id="user"></span>
+            </h3>
+        </div>
+    </div>
+
+</template>
+<script>
+    export default function (props, ctx) {
+        var $on = ctx.$on;
+        $on("pageInit", () => {
+            $('#user').html(localStorage.getItem("nama"))
+        });
+        return $render;
+    }
+</script>
