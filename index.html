@@ -49,6 +49,7 @@ scalable=no, viewport-fit=cover"
           app.views.main.router.navigate("/login/");
         }
       }
+
       function login() {
         let email = $("#email").val();
         let password = $("#password").val();
@@ -64,26 +65,26 @@ scalable=no, viewport-fit=cover"
             password: password,
           },
           cache: "false",
-          success: function (repsonse) {
-            if (repsonse.status == "success") {
-              localStorage.setItem("id", repsonse.data.id_user);
-              localStorage.setItem("nama", repsonse.data.nama);
-              localStorage.setItem("jenis", repsonse.data.jenis);
-              localStorage.setItem("email", repsonse.data.email);
-              localStorage.setItem("alamat", repsonse.data.alamat);
-              localStorage.setItem("instansi", repsonse.data.instansi);
-              localStorage.setItem("photo", repsonse.data.photo);
+          success: function (response) {
+            if (response.status == "success") {
+              localStorage.setItem("id", response.data.id_user);
+              localStorage.setItem("nama", response.data.nama);
+              localStorage.setItem("jenis", response.data.jenis);
+              localStorage.setItem("email", response.data.email);
+              localStorage.setItem("alamat", response.data.alamat);
+              localStorage.setItem("instansi", response.data.instansi);
+              localStorage.setItem("photo", response.data.photo);
               location.reload(true);
               app.views.main.router.navigate("/home/");
             } else {
-              app.dialog.alert(data.message, "Gagal");
+              app.dialog.alert(response.message, "Gagal");
             }
           },
         });
       }
 
       function logout() {
-        app.dialog.alert("Apakah ingin keluar?", "Peringatan", function () {
+        app.dialog.confirm("Apakah ingin keluar?", "Peringatan", function () {
           localStorage.removeItem("id");
           localStorage.removeItem("nama");
           localStorage.removeItem("jenis");
@@ -94,6 +95,201 @@ scalable=no, viewport-fit=cover"
           location.reload(true);
         });
       }
+
+      function data_pasien() {
+        $.getJSON(url + "api/pasien", function (data) {
+            var pasien = "";
+            $.each(data.data, function(index, item) {
+                pasien +=`
+                <li>
+                  <div data-id="`+item.id_pasien+`" onclick="detail_pasien(this)" class="item-link item-content">
+                    <div class="item-inner">
+                      <div class="item-title">
+                          `+item.nama+`
+                          <div class="item-header">`+item.id_rfid+`</div>
+                      </div>
+                      <div class="item-after">Detail</div>
+                    </div>
+                  </div>
+                </li>
+                `;
+            });
+            $('#data-pasien').html(pasien);
+        });
+      }
+
+      function detail_pasien(el) {
+        let id_pasien = $(el).data('id');
+        app.views.main.router.navigate("/detailpasien/");
+        $.getJSON(url + "api/detail-pasien", {id: id_pasien}, function (data) {
+          let detail_pasien = "";
+          detail_pasien += `
+            <div style="margin: 15px;">
+              <div class="row">
+                <div class="col">
+                  <div class="card demo-facebook-card mt-5 btn-border-10 p-1 shadow">
+                    <div class="card-header">
+                      <b>Nama </b></br>
+                      `+data.data.nama+`</br>
+
+                      <b>Insntansi </b></br>
+                      `+data.data.instansi+`</br>
+
+                      <b>Jenis kelamin </b></br>
+                      `+data.data.jenis_kelamin+`</br>
+
+                      <b>Tanggal Lahir </b></br>
+                      `+data.data.tgl_lahir+`</br>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+          
+          
+            detail_pasien += `
+              <div class="card demo-facebook-card mt-5 btn-border-10 p-1 shadow">
+                <div class="card-header">
+                  Histori Pengukuran
+                </div>
+                <div class="data-table">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th class="text-center">Tanggal</th>
+                        <th class="text-center">RFID</th>
+                        <th class="text-center">BB</th>
+                        <th class="text-center">TB</th>
+                      </tr>
+                    </thead>
+                    <tbody>`;
+                      $.each(data.pengukuran, function(index, i) {
+                        detail_pasien +=`  
+                          <tr>
+                            <td>`+i.created+`</td>
+                            <td>`+i.id_rfid+`</td>
+                            <td>`+i.berat_badan+`</td>
+                            <td>`+i.tinggi_badan+`</td>
+                          </tr>`;
+                      });
+                    
+                    detail_pasien +=`    
+                    </tbody>
+                  </table>
+                </div>
+              </div>  
+            `;
+          
+          $('#detail_pasien').html(detail_pasien);
+        });
+      }
+    
+      function data_pengukuran() {
+        $.getJSON(url + "api/data-pengukuran", function (data) {
+            var pasien = "";
+            $.each(data.data, function(index, item) {
+                pasien +=`
+                <li>
+                  <div data-id="`+item.id+`" onclick="detail_pengukuran(this)" class="item-link item-content">
+                    <div class="item-inner">
+                      <div class="item-title">
+                          `+item.nama+`
+                          <div class="item-header">`+item.id_rfid+`</div>
+                      </div>
+                      <div class="item-after">Detail</div>
+                    </div>
+                  </div>
+                </li>
+                `;
+            });
+            $('#data-pengukuran').html(pasien);
+        });
+      }
+
+      function detail_pengukuran(el) {
+        let id = $(el).data('id');
+        app.views.main.router.navigate("/detailpengukuran/");
+        $.getJSON(url + "api/detail-pengukuran", {id: id}, function (data) {
+
+          // perhitungan status ideal
+          let tinggi = data.data.tinggi_badan / 100;
+          let hasil_tinggi = tinggi * tinggi;
+          let hasil = data.data.berat_badan / hasil_tinggi;
+          let status = hasil.toFixed(2);
+
+          // pengukuran status ideal
+          let ideal = "";
+          if (status < 18) {
+            ideal = 'Kurus';
+          }else if(status >= 18 && status <= 25){
+            ideal = 'Normal';
+          }else if(status > 25 && status < 27){
+            ideal = 'Kegemukan';
+          }else{
+            ideal = 'Obesitas';
+          }
+
+          let detail_pengukuran= "";
+          detail_pengukuran+= `
+            <div style="margin: 15px;">
+              <div class="row">
+                <div class="col">
+                  <div class="card demo-facebook-card mt-5 btn-border-10 p-1 shadow">
+                    <div class="card-header">
+                      <b>Nama </b></br>
+                      `+data.data.nama+`</br></br>
+
+                      <b>Tinggi Badan </b></br>
+                      `+data.data.tinggi_badan+`</br></br>
+
+                      <b>Berat Badan </b></br>
+                      `+data.data.berat_badan+`</br></br>
+
+                      <b>Usia </b></br>
+                      `+data.data.usia+`</br></br>
+
+                      <b>Diukur pada tanggal </b></br>
+                      `+data.data.created+`</br></br>
+
+                      <b>Hasil Pengukuran </b></br>
+                      `+status+`</br></br>
+
+                      <b>Status Pengukuran </b></br>
+                      `+ideal+`</br></br>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="block block-strong">
+              <button class="col button button-fill color-red" data-id="`+data.data.id+`" onclick="hapus_pengukuran(this)">Hapus</button>
+            </div>
+          `;
+          $('#detail_pengukuran').html(detail_pengukuran);
+        });
+      }
+
+      function hapus_pengukuran(el) {
+        app.dialog.confirm("Apakah ingin menghapus?", "Peringatan", function () {
+          $.ajax({
+              url: url + 'api/hapus-pengukuran',
+              type: 'GET',
+              data: {id: $(el).data('id')},
+              async: false,
+              success: function(response) {
+                if (response.status == 'success') {
+                  app.dialog.alert(response.message, "Sukses", function(){
+                    app.views.main.router.back();
+                  });
+                }else{
+                  app.dialog.alert(response.message, "Error");
+                }
+              }
+          });
+        });
+      }
+    
     </script>
   </body>
 </html>

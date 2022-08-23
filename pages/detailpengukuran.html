@@ -15,24 +15,20 @@
             <i class="icon icon-back"></i>
           </a>
         </div>
-        <div class="title" style="margin-left: 5px">Data Pasien</div>
+        <div class="title" style="margin-left: 5px">Detail Pengukuran</div>
       </div>
     </div>
-    <div class="page-content">
-        <div class="list">
-          <ul id="data-pasien">
-            
-          </ul>
-        </div>
+    <div class="page-content" id="detail_pengukuran">
     </div>
   </div>
+
 </template>
 <script>
-  export default (props, ctx) => {
-    var $on = ctx.$on;
-    $on("pageInit", () => {
-      data_pasien();
-    });
-    return $render;
-  };
+  export default function (props, ctx) {
+      var $on = ctx.$on;
+      $on("pageInit", () => {
+          
+      });
+      return $render;
+  }
 </script>
