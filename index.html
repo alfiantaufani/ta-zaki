@@ -1,154 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-
-scalable=no, viewport-fit=cover"
-    />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta
-      name="apple-mobile-web-app-status-bar-style"
-      content="black-translucent"
-    />
-    <meta name="theme-color" content="#fff" />
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap:"
-    />
-    <title>Tugas Akhir</title>
-    <link rel="stylesheet" href="core/framework7-bundle.min.css" />
-    <link rel="stylesheet" href="css/app.css" />
-  </head>
 
-  <body>
-    <div id="app">
-      <div
-        class="view view-main view-init safe-areas"
-        data-master-detail-breakpoint="768"
-        data-url="/"
-      ></div>
-    </div>
-    <script src="core/framework7-bundle.min.js"></script>
-    <script src="js/routes.js"></script>
-    <script src="js/store.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/jquery-3.6.0.min.js"></script>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-
+scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#fff" />
+  <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap:" />
+  <title>Tugas Akhir</title>
+  <link rel="stylesheet" href="core/framework7-bundle.min.css" />
+  <link rel="stylesheet" href="css/app.css" />
+</head>
 
-    <script>
-      var url = "http://localhost/Sistem-IMT/";
-      cek();
-      function cek() {
-        if (
-          localStorage.getItem("id") != null &&
-          localStorage.getItem("email") != null
-        ) {
-          app.views.main.router.navigate("/home/");
-        } else {
-          app.views.main.router.navigate("/login/");
-        }
+<body>
+  <div id="app">
+    <div class="view view-main view-init safe-areas" data-master-detail-breakpoint="768" data-url="/"></div>
+  </div>
+  <script src="core/framework7-bundle.min.js"></script>
+  <script src="js/routes.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/jquery-3.6.0.min.js"></script>
+
+  <script>
+    var url = "http://localhost/Sistem-IMT/";
+    cek();
+    function cek() {
+      if (
+        localStorage.getItem("id") != null &&
+        localStorage.getItem("email") != null
+      ) {
+        app.views.main.router.navigate("/home/");
+      } else {
+        app.views.main.router.navigate("/login/");
       }
+    }
 
-      function login() {
-        let email = $("#email").val();
-        let password = $("#password").val();
-        if (email == "" || password == "") {
-          app.dialog.alert("Harap isi data diri anda", "Warning!");
-          return;
-        }
-        $.ajax({
-          url: url + "api/login",
-          method: "POST",
-          data: {
-            email: email,
-            password: password,
-          },
-          cache: "false",
-          success: function (response) {
-            if (response.status == "success") {
-              localStorage.setItem("id", response.data.id_user);
-              localStorage.setItem("nama", response.data.nama);
-              localStorage.setItem("jenis", response.data.jenis);
-              localStorage.setItem("email", response.data.email);
-              localStorage.setItem("alamat", response.data.alamat);
-              localStorage.setItem("instansi", response.data.instansi);
-              localStorage.setItem("photo", response.data.photo);
-              location.reload(true);
-              app.views.main.router.navigate("/home/");
-            } else {
-              app.dialog.alert(response.message, "Gagal");
-            }
-          },
-        });
+    function login() {
+      let email = $("#email").val();
+      let password = $("#password").val();
+      if (email == "" || password == "") {
+        app.dialog.alert("Harap isi data diri anda", "Warning!");
+        return;
       }
+      $.ajax({
+        url: url + "api/login",
+        method: "POST",
+        data: {
+          email: email,
+          password: password,
+        },
+        cache: "false",
+        success: function (response) {
+          if (response.status == "success") {
+            localStorage.setItem("id", response.data.id_user);
+            localStorage.setItem("nama", response.data.nama);
+            localStorage.setItem("jenis", response.data.jenis);
+            localStorage.setItem("email", response.data.email);
+            localStorage.setItem("alamat", response.data.alamat);
+            localStorage.setItem("instansi", response.data.instansi);
+            localStorage.setItem("photo", response.data.photo);
+            location.reload(true);
+            app.views.main.router.navigate("/home/");
+          } else {
+            app.dialog.alert(response.message, "Gagal");
+          }
+        },
+      });
+    }
 
-      function logout() {
-        app.dialog.confirm("Apakah ingin keluar?", "Peringatan", function () {
-          localStorage.removeItem("id");
-          localStorage.removeItem("nama");
-          localStorage.removeItem("jenis");
-          localStorage.removeItem("email");
-          localStorage.removeItem("alamat");
-          localStorage.removeItem("instansi");
-          localStorage.removeItem("photo");
-          location.reload(true);
-        });
-      }
+    function logout() {
+      app.dialog.confirm("Apakah ingin keluar?", "Peringatan", function () {
+        localStorage.removeItem("id");
+        localStorage.removeItem("nama");
+        localStorage.removeItem("jenis");
+        localStorage.removeItem("email");
+        localStorage.removeItem("alamat");
+        localStorage.removeItem("instansi");
+        localStorage.removeItem("photo");
+        location.reload(true);
+      });
+    }
 
-      function data_pasien() {
-        $.getJSON(url + "api/pasien", function (data) {
-            var pasien = "";
-            $.each(data.data, function(index, item) {
-                pasien +=`
+    function data_pasien() {
+      $.getJSON(url + "api/pasien", function (data) {
+        var pasien = "";
+        $.each(data.data, function (index, item) {
+          pasien += `
                 <li>
-                  <div data-id="`+item.id_pasien+`" onclick="detail_pasien(this)" class="item-link item-content">
+                  <div data-id="`+ item.id_pasien + `" onclick="detail_pasien(this)" class="item-link item-content">
                     <div class="item-inner">
                       <div class="item-title">
-                          `+item.nama+`
-                          <div class="item-header">`+item.id_rfid+`</div>
+                          `+ item.nama + `
+                          <div class="item-header">`+ item.id_rfid + `</div>
                       </div>
                       <div class="item-after">Detail</div>
                     </div>
                   </div>
                 </li>
                 `;
-            });
-            $('#data-pasien').html(pasien);
         });
-      }
+        $('#data-pasien').html(pasien);
+      });
+    }
 
-      function detail_pasien(el) {
-        let id_pasien = $(el).data('id');
-        app.views.main.router.navigate("/detailpasien/");
-        $.getJSON(url + "api/detail-pasien", {id: id_pasien}, function (data) {
-          let detail_pasien = "";
-          detail_pasien += `
+    function detail_pasien(el) {
+      let id_pasien = $(el).data('id');
+      app.views.main.router.navigate("/detailpasien/");
+      $.getJSON(url + "api/detail-pasien", { id: id_pasien }, function (data) {
+        let detail_pasien = "";
+        detail_pasien += `
             <div style="margin: 15px;">
               <div class="row">
                 <div class="col">
                   <div class="card demo-facebook-card mt-5 btn-border-10 p-1 shadow">
                     <div class="card-header">
                       <b>Nama </b></br>
-                      `+data.data.nama+`</br>
+                      `+ data.data.nama + `</br>
 
                       <b>Insntansi </b></br>
-                      `+data.data.instansi+`</br>
+                      `+ data.data.instansi + `</br>
 
                       <b>Jenis kelamin </b></br>
-                      `+data.data.jenis_kelamin+`</br>
+                      `+ data.data.jenis_kelamin + `</br>
 
                       <b>Tanggal Lahir </b></br>
-                      `+data.data.tgl_lahir+`</br>
+                      `+ data.data.tgl_lahir + `</br>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           `;
-          
-          
-            detail_pasien += `
+
+
+        detail_pasien += `
               <div class="card demo-facebook-card mt-5 btn-border-10 p-1 shadow">
                 <div class="card-header">
                   Histori Pengukuran
@@ -164,132 +152,164 @@ scalable=no, viewport-fit=cover"
                       </tr>
                     </thead>
                     <tbody>`;
-                      $.each(data.pengukuran, function(index, i) {
-                        detail_pasien +=`  
+        $.each(data.pengukuran, function (index, i) {
+          detail_pasien += `  
                           <tr>
-                            <td>`+i.created+`</td>
-                            <td>`+i.id_rfid+`</td>
-                            <td>`+i.berat_badan+`</td>
-                            <td>`+i.tinggi_badan+`</td>
+                            <td>`+ i.created + `</td>
+                            <td>`+ i.id_rfid + `</td>
+                            <td>`+ i.berat_badan + `</td>
+                            <td>`+ i.tinggi_badan + `</td>
                           </tr>`;
-                      });
-                    
-                    detail_pasien +=`    
+        });
+
+        detail_pasien += `    
                     </tbody>
                   </table>
                 </div>
               </div>  
             `;
-          
-          $('#detail_pasien').html(detail_pasien);
-        });
-      }
-    
-      function data_pengukuran() {
-        $.getJSON(url + "api/data-pengukuran", function (data) {
-            var pasien = "";
-            $.each(data.data, function(index, item) {
-                pasien +=`
+
+        $('#detail_pasien').html(detail_pasien);
+      });
+    }
+
+    function data_pengukuran() {
+      $.getJSON(url + "api/data-pengukuran", function (data) {
+        var pasien = "";
+        $.each(data.data, function (index, item) {
+          pasien += `
                 <li>
-                  <div data-id="`+item.id+`" onclick="detail_pengukuran(this)" class="item-link item-content">
+                  <div data-id="`+ item.id + `" onclick="detail_pengukuran(this)" class="item-link item-content">
                     <div class="item-inner">
                       <div class="item-title">
-                          `+item.nama+`
-                          <div class="item-header">`+item.id_rfid+`</div>
+                          `+ item.nama + `
+                          <div class="item-header">`+ item.id_rfid + `</div>
                       </div>
                       <div class="item-after">Detail</div>
                     </div>
                   </div>
                 </li>
                 `;
-            });
-            $('#data-pengukuran').html(pasien);
         });
-      }
+        $('#data-pengukuran').html(pasien);
+      });
+    }
 
-      function detail_pengukuran(el) {
-        let id = $(el).data('id');
-        app.views.main.router.navigate("/detailpengukuran/");
-        $.getJSON(url + "api/detail-pengukuran", {id: id}, function (data) {
+    function detail_pengukuran(el) {
+      let id = $(el).data('id');
+      app.views.main.router.navigate("/detailpengukuran/");
+      $.getJSON(url + "api/detail-pengukuran", { id: id }, function (data) {
 
-          // perhitungan status ideal
-          let tinggi = data.data.tinggi_badan / 100;
-          let hasil_tinggi = tinggi * tinggi;
-          let hasil = data.data.berat_badan / hasil_tinggi;
-          let status = hasil.toFixed(2);
+        // perhitungan status ideal
+        let tinggi = data.data.tinggi_badan / 100;
+        let hasil_tinggi = tinggi * tinggi;
+        let hasil = data.data.berat_badan / hasil_tinggi;
+        let status = hasil.toFixed(2);
 
-          // pengukuran status ideal
-          let ideal = "";
-          if (status < 18) {
-            ideal = 'Kurus';
-          }else if(status >= 18 && status <= 25){
-            ideal = 'Normal';
-          }else if(status > 25 && status < 27){
-            ideal = 'Kegemukan';
-          }else{
-            ideal = 'Obesitas';
-          }
+        // pengukuran status ideal
+        let ideal = "";
+        if (status < 18) {
+          ideal = 'Kurus';
+        } else if (status >= 18 && status <= 25) {
+          ideal = 'Normal';
+        } else if (status > 25 && status < 27) {
+          ideal = 'Kegemukan';
+        } else {
+          ideal = 'Obesitas';
+        }
 
-          let detail_pengukuran= "";
-          detail_pengukuran+= `
+        let detail_pengukuran = "";
+        detail_pengukuran += `
             <div style="margin: 15px;">
               <div class="row">
                 <div class="col">
                   <div class="card demo-facebook-card mt-5 btn-border-10 p-1 shadow">
                     <div class="card-header">
                       <b>Nama </b></br>
-                      `+data.data.nama+`</br></br>
+                      `+ data.data.nama + `</br></br>
 
                       <b>Tinggi Badan </b></br>
-                      `+data.data.tinggi_badan+`</br></br>
+                      `+ data.data.tinggi_badan + `</br></br>
 
                       <b>Berat Badan </b></br>
-                      `+data.data.berat_badan+`</br></br>
+                      `+ data.data.berat_badan + `</br></br>
 
                       <b>Usia </b></br>
-                      `+data.data.usia+`</br></br>
+                      `+ data.data.usia + `</br></br>
 
                       <b>Diukur pada tanggal </b></br>
-                      `+data.data.created+`</br></br>
+                      `+ data.data.created + `</br></br>
 
                       <b>Hasil Pengukuran </b></br>
-                      `+status+`</br></br>
+                      `+ status + `</br></br>
 
                       <b>Status Pengukuran </b></br>
-                      `+ideal+`</br></br>
+                      `+ ideal + `</br></br>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
             <div class="block block-strong">
-              <button class="col button button-fill color-red" data-id="`+data.data.id+`" onclick="hapus_pengukuran(this)">Hapus</button>
+              <button class="col button button-fill color-red" data-id="`+ data.data.id + `" onclick="hapus_pengukuran(this)">Hapus</button>
             </div>
           `;
-          $('#detail_pengukuran').html(detail_pengukuran);
-        });
-      }
+        $('#detail_pengukuran').html(detail_pengukuran);
+      });
+    }
 
-      function hapus_pengukuran(el) {
-        app.dialog.confirm("Apakah ingin menghapus?", "Peringatan", function () {
-          $.ajax({
-              url: url + 'api/hapus-pengukuran',
-              type: 'GET',
-              data: {id: $(el).data('id')},
-              async: false,
-              success: function(response) {
-                if (response.status == 'success') {
-                  app.dialog.alert(response.message, "Sukses", function(){
-                    app.views.main.router.back();
-                  });
-                }else{
-                  app.dialog.alert(response.message, "Error");
-                }
-              }
-          });
+    function hapus_pengukuran(el) {
+      app.dialog.confirm("Apakah ingin menghapus?", "Peringatan", function () {
+        $.ajax({
+          url: url + 'api/hapus-pengukuran',
+          type: 'GET',
+          data: { id: $(el).data('id') },
+          async: false,
+          success: function (response) {
+            if (response.status == 'success') {
+              app.dialog.alert(response.message, "Sukses", function () {
+                app.views.main.router.back();
+              });
+            } else {
+              app.dialog.alert(response.message, "Error");
+            }
+          }
         });
-      }
-    
-    </script>
-  </body>
+      });
+    }
+
+    function instansi() {
+      $.getJSON(url + 'api/instansi', function (data) {
+        var instansi = "";
+        $.each(data.data, function (index, item) {
+          instansi += `
+          <div class="card demo-facebook-card mt-5 btn-border-10 p-1 shadow">
+                <div class="data-table">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th class="text-center">Instansi</th>
+                        <th class="text-center">Alamat</th>
+                        <th class="text-center">Code Instansi</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                            <td>`+ item.instansi + `</td>
+                            <td>`+ item.alamat + `</td>
+                            <td>`+ item.code_instansi + `</td>
+                          </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>  
+            `;
+        });
+        $('#ins').html(instansi);
+      });
+    }
+
+  </script>
+</body>
+
 </html>

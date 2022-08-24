@@ -800,7 +800,7 @@ code {
 }
 
 .md .navbar a.icon-only {
-  width: 77px !important;
+  width: 50px !important;
 }
 
 .bold {
@@ -880,6 +880,6 @@ code {
   display: none !important;
 }
 
-th{
+th {
   padding: 0px !important;
 }

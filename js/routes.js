@@ -6,8 +6,6 @@ var routes = [
   { path: '/detailpasien/', componentUrl: 'pages/detailpasien.html' },
   { path: '/dtukur/', componentUrl: 'pages/dtukur.html' },
   { path: '/detailpengukuran/', componentUrl: 'pages/detailpengukuran.html' },
-  { path: '/bb/', componentUrl: 'pages/bb.html' },
-  { path: '/tb/', componentUrl: 'pages/tb.html' },
-  { path: '/daftar/', componentUrl: 'pages/daftar.html' },
+  { path: '/instansi/', componentUrl: 'pages/instansi.html' },
   { path: '(.*)', url: 'pages/404.html', }
 ];
