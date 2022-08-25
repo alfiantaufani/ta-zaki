@@ -1,14 +1,8 @@
 <template>
   <div class="page page-home">
     <div class="navbar no-shadow" style="color: white">
-      <div
-        class="navbar-bg bg-color-deeppurple"
-        style="
-          height: 55px;
-          border-top-left-radius: 15px;
-          border-top-right-radius: 15px;
-        "
-      ></div>
+      <div class="navbar-bg" style="background-color: #00CCFF; height: 55px; border-top-left-radius: 15px;
+          border-top-right-radius: 15px;"></div>
       <div class="navbar-inner">
         <div class="left">
           <a href="#" class="link back" style="color: white">
@@ -30,9 +24,9 @@
 <script>
   export default (props, ctx) => {
     var $on = ctx.$on;
-      $on("pageAfterIn", () => {
-        data_pengukuran();
-      });
+    $on("pageAfterIn", () => {
+      data_pengukuran();
+    });
     return $render;
   };
 </script>
