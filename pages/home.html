@@ -1,65 +1,73 @@
 <template>
     <div class="page page-home">
-        <div class="navbar no-shadow" style="color: white;">
-            <div class="navbar-bg bg-color-deeppurple"
-                style="height: 55px; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+        <div class="navbar no-shadow">
+            <div class="navbar-bg bg-color-white">
             </div>
             <div class="navbar-inner">
-                <div class="title">Dashboard</div>
+                <div class="title" style="color: rgb(99, 96, 96);">Dashboard</div>
                 <div class="right">
-                    <a href="#" class="link icon-only panel-open" data-panel="right" style="color: white;">
-                        <i class="icon material-icons md-only">menu</i>
-                    </a>
+                    <a href="javascript:void(0)" class="link" style="color: rgb(99, 96, 96);"
+                        @click="${() => logout()}"><i class="icon f7-icons">square_arrow_right</i></a>
                 </div>
             </div>
         </div>
-        <div style="background: url('img/bgnavy.png'); margin-top: 40px; height: 1000px; border-radius: 15px;"></div>
-        <div class="page-content" style="margin-top: -1030px;">
-            <div class="panel panel-right panel-cover panel-resizable panel-init">
-                <div class="block-title">Menu</div>
-                <div class="list links-list">
-                    <ul>
-                        <li>
-                            <a href="/profil/" class="panel-close">Profile</a>
-                        </li>
-                        <li>
-                            <a href="/dtpasien/" class="panel-close">Data Pasien</a>
-                        </li>
-                        <li>
-                            <a href="/dtukur/" class="panel-close">Hasil Pengukuran</a>
-                        </li>
-                        <li>
-                            <a href="/instansi/" class="panel-close">Instansi</a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" class="panel-close" @click="${() => logout()}">Keluar</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+      
+        <div class="page-content">
+            <div class="row" style="margin-bottom: 50px;">
+                <div class="col" style="background: url(img/bg.jpg); height: 350px; width: 400px;">
+                    <div class="row">
+                        <div class="col" style="text-align: center;">
+                            <h2 style="color: white; margin: 20px;">
+                                Selamat Datang
+                            </h2>
+                        </div>
+                    </div>
 
-            <div class="row" style="margin-left: 3%; margin-right: 3%;">
-                <div class="col" style="text-align: center;">
+                    <div class="row" style="margin-bottom: 10px;">
+                        <div class="col" style="text-align: center;">
+                            <div style="display: block; width: 55%; margin-left: auto; margin-right: auto">
+                                <span class="circle-image">
+                                    <img id="img" width="70" height="70" alt="User" />
+                                </span>
+                            </div>
+                        </div>
+                    </div>
 
-                    <h2 style="color: #fff; margin: 20px;">
-                        Selamat Datang, <span id="user"></span>
-                    </h2>
-
-                </div>
-            </div>
-            <div class="row" style="margin-left: 3%; margin-right: 3%;">
-                <div class="col" style="text-align: center;">
-                    <div style="display: block; width: 55%; margin-left: auto; margin-right: auto">
-                        <span class="circle-image">
-                            <img id="img" width="70" height="70" alt="User" />
-                        </span>
+                    <div class="row">
+                        <div class="col" style="text-align: center;">
+                            <h2 style="color: white; margin: 20px;">
+                                <span id="user"></span>
+                            </h2>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- <h3 style="color: #fff; margin: 20px">
-                Selamat Datang, <span id="user"></span>
-            </h3> -->
+            <div class="row" style="margin-left: 3px; margin-right: 3px; margin-bottom: 10px;">
+                <div class="col" style="text-align: center;">
+                    <div class="row" style="margin-bottom: 10px;">
+                        <a href="/profil/" class="col text-align-center"><img src="img/profil.png"
+                                style="width: 100px;" /><br />
+                            <h3 style="color: black;">Profil</h3>
+                        </a>
+                        <a href="/instansi/" class="col text-align-center"><img src="img/instansi.png"
+                                style="width: 100px;" /><br />
+                            <h3 style="color: black;">Instansi</h3>
+                        </a>
+                    </div>
+                    <div class="row" style="margin-bottom: 10px;">
+                        <a href="/dtpasien/" class="col text-align-center"><img src="img/data pasien.png"
+                                style="width: 100px;" /><br />
+                            <h3 style="color: black;">Data Pasien</h3>
+                        </a>
+                        <a href="/dtukur/" class="col text-align-center"><img src="img/pengukuran.png"
+                                style="width: 100px;" /><br />
+                            <h3 style="color: black;">Pengukuran</h3>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
