@@ -154,15 +154,19 @@ scalable=no, viewport-fit=cover" />
                       </tr>
                     </thead>
                     <tbody>`;
+      if (data.pengukuran == "") {
+        detail_pasien += `<tr><td colspan="3"><center>Data tidak tersedia</center></td></tr>`;
+      }else{
         $.each(data.pengukuran, function (index, i) {
-          detail_pasien += `  
-                          <tr>
-                            <td>`+ i.created + `</td>
-                            <td>`+ i.id_rfid + `</td>
-                            <td>`+ i.berat_badan + `</td>
-                            <td>`+ i.tinggi_badan + `</td>
-                          </tr>`;
+            detail_pasien += `  
+                            <tr>
+                              <td>`+ i.created + `</td>
+                              <td>`+ i.id_rfid + `</td>
+                              <td>`+ i.berat_badan + `</td>
+                              <td>`+ i.tinggi_badan + `</td>
+                            </tr>`;
         });
+      }
 
         detail_pasien += `    
                     </tbody>

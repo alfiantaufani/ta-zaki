@@ -1,83 +1,106 @@
 <template>
-    <div class="page page-home">
-        <div class="navbar no-shadow">
-            <div class="navbar-bg bg-color-white">
-            </div>
-            <div class="navbar-inner">
-                <div class="title" style="color: rgb(99, 96, 96);">Dashboard</div>
-                <div class="right">
-                    <a href="javascript:void(0)" class="link" style="color: rgb(99, 96, 96);"
-                        @click="${() => logout()}"><i class="icon f7-icons">square_arrow_right</i></a>
-                </div>
-            </div>
+  <div class="page page-home">
+    <div class="navbar no-shadow">
+      <div class="navbar-bg bg-color-white"></div>
+      <div class="navbar-inner">
+        <div class="title" style="color: rgb(99, 96, 96)">Dashboard</div>
+        <div class="right">
+          <a
+            href="javascript:void(0)"
+            class="link"
+            style="color: rgb(99, 96, 96)"
+            @click="${() => logout()}"
+            ><i class="icon f7-icons">square_arrow_right</i></a
+          >
         </div>
-      
-        <div class="page-content">
-            <div class="row" style="margin-bottom: 50px;">
-                <div class="col" style="background: url(img/bg.jpg); height: 350px; width: 400px;">
-                    <div class="row">
-                        <div class="col" style="text-align: center;">
-                            <h2 style="color: white; margin: 20px;">
-                                Selamat Datang
-                            </h2>
-                        </div>
-                    </div>
-
-                    <div class="row" style="margin-bottom: 10px;">
-                        <div class="col" style="text-align: center;">
-                            <div style="display: block; width: 55%; margin-left: auto; margin-right: auto">
-                                <span class="circle-image">
-                                    <img id="img" width="70" height="70" alt="User" />
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col" style="text-align: center;">
-                            <h2 style="color: white; margin: 20px;">
-                                <span id="user"></span>
-                            </h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row" style="margin-left: 3px; margin-right: 3px; margin-bottom: 10px;">
-                <div class="col" style="text-align: center;">
-                    <div class="row" style="margin-bottom: 10px;">
-                        <a href="/profil/" class="col text-align-center"><img src="img/profil.png"
-                                style="width: 100px;" /><br />
-                            <h3 style="color: black;">Profil</h3>
-                        </a>
-                        <a href="/instansi/" class="col text-align-center"><img src="img/instansi.png"
-                                style="width: 100px;" /><br />
-                            <h3 style="color: black;">Instansi</h3>
-                        </a>
-                    </div>
-                    <div class="row" style="margin-bottom: 10px;">
-                        <a href="/dtpasien/" class="col text-align-center"><img src="img/data pasien.png"
-                                style="width: 100px;" /><br />
-                            <h3 style="color: black;">Data Pasien</h3>
-                        </a>
-                        <a href="/dtukur/" class="col text-align-center"><img src="img/pengukuran.png"
-                                style="width: 100px;" /><br />
-                            <h3 style="color: black;">Pengukuran</h3>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+      </div>
     </div>
 
+    <div class="page-content">
+      <div class="row" style="margin-bottom: 50px">
+        <div
+          class="col"
+          style="background: url(img/bg.jpg); height: 350px; width: 400px"
+        >
+          <div class="row">
+            <div class="col" style="text-align: center">
+              <h2 style="color: white; margin: 20px">Selamat Datang</h2>
+            </div>
+          </div>
+
+          <div class="row" style="margin-bottom: 10px">
+            <div class="col" style="text-align: center">
+              <div
+                style="
+                  display: block;
+                  width: 55%;
+                  margin-left: auto;
+                  margin-right: auto;
+                "
+              >
+                <span class="circle-image-2">
+                  <img id="img" width="70" height="70" alt="User" alt="Foto profil"/>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col" style="text-align: center">
+              <h2 style="color: white" id="user"></h2>
+              <div class="chip color-blue">
+                <div class="chip-label" id="jenis"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="row"
+        style="margin-left: 3px; margin-right: 3px; margin-bottom: 10px"
+      >
+        <div class="col" style="text-align: center">
+          <div class="row" style="margin-bottom: 10px">
+            <a href="/profil/" class="col text-align-center"
+              ><img src="img/profil.png" style="width: 100px" /><br />
+              <h3 style="color: black">Profil</h3>
+            </a>
+            <a href="/instansi/" class="col text-align-center"
+              ><img src="img/instansi.png" style="width: 100px" /><br />
+              <h3 style="color: black">Instansi</h3>
+            </a>
+          </div>
+          <div class="row" style="margin-bottom: 10px">
+            <a href="/dtpasien/" class="col text-align-center"
+              ><img src="img/data pasien.png" style="width: 100px" /><br />
+              <h3 style="color: black">Data Pasien</h3>
+            </a>
+            <a href="/dtukur/" class="col text-align-center"
+              ><img src="img/pengukuran.png" style="width: 100px" /><br />
+              <h3 style="color: black">Pengukuran</h3>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
-    export default function (props, ctx) {
-        var $on = ctx.$on;
-        $on("pageInit", () => {
-            $('#user').html(localStorage.getItem("nama"))
-        });
-        return $render;
-    }
+  export default function (props, ctx) {
+    var $on = ctx.$on;
+    $on("pageInit", () => {
+      $.getJSON(url + "api/profil", { id: localStorage.getItem("id") }, function (data) {
+            if (data.data.photo == null) {
+                $("#img").attr("src", "img/no-image.png");
+            }else{
+                $("#img").attr("src", url + "assets/profile_picture/" + data.data.photo);
+            }
+            $("#jenis").html(data.data.jenis);
+            $("#user").html(data.data.nama);
+        }
+      );
+    });
+    return $render;
+  }
 </script>
